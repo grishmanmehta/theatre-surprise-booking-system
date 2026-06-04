@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Theatres in {{ city.name }}</h1>
+    <a href="{{ url_for('cities') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Cities
+    </a>
+</div>
+
+<div class="alert alert-info">
+    <i class="fas fa-info-circle"></i> Select a theatre to see available screens
+</div>
+
+<div class="row">
+    {% for theatre in theatres %}
+    <div class="col-md-6 mb-4">
+        <div class="card theatre-card h-100">
+            <div class="card-body">
+                <h4 class="card-title">{{ theatre.name }}</h4>
+                <p class="card-text"><i class="fas fa-map-marker-alt text-danger"></i> {{ theatre.address }}</p>
+                <p class="card-text"><i class="fas fa-film text-primary"></i> {{ theatre.screens|length }} screens available</p>
+
+                <!-- Show available screens for this theatre -->
+                <div class="screens-list mt-3">
+                    <h6>Available Screens:</h6>
+                    {% for screen in theatre.screens %}
+                    <div class="screen-item mb-2">
+                        <a href="{{ url_for('booking', screen_id=screen.id) }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-tv"></i> {{ screen.name }} (Capacity: {{ screen.capacity }})
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

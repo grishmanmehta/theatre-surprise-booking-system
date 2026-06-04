@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-cog"></i> Admin Panel</h1>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">All Bookings</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User</th>
+                        <th>Theatre</th>
+                        <th>Screen</th>
+                        <th>Date & Time</th>
+                        <th>Occasion</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>#{{ booking.id }}</td>
+                        <td>{{ booking.user.name }}</td>
+                        <td>{{ booking.screen.theatre.name }}</td>
+                        <td>{{ booking.screen.name }}</td>
+                        <td>{{ booking.booking_date }} {{ booking.booking_time }}</td>
+                        <td>{{ booking.occasion }}</td>
+                        <td>₹{{ calculate_total(booking) }}</td>
+                        <td><span class="badge bg-success">Confirmed</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
